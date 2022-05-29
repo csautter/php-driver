@@ -1,4 +1,4 @@
-FROM debian:buster-slim AS cassandra_cpp_driver
+FROM debian:10.12-slim AS cassandra_cpp_driver
 
 # Datastax/Cassandra CPP Driver
 WORKDIR /tmp
@@ -29,7 +29,7 @@ RUN git clone https://github.com/datastax/cpp-driver.git \
 RUN cd /tmp/cpp-driver/build \
     && checkinstall -y -D --install=no --pkgname=cassandra-cpp-driver --pkgversion=2.16.0 --pkgarch=amd64
 
-FROM debian:buster-slim
+FROM debian:10.12-slim
 
 COPY --from=cassandra_cpp_driver /tmp/cpp-driver/build/cassandra-cpp-driver_2.16.0-1_amd64.deb /tmp/cpp-driver/build/cassandra-cpp-driver_2.16.0-1_amd64.deb
 RUN dpkg -i /tmp/cpp-driver/build/cassandra-cpp-driver_2.16.0-1_amd64.deb
